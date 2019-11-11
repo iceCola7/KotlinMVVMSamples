@@ -1,2 +1,2 @@
 include ':app', ':baselibs'
-rootProject.name='KotlinMVVMSamples'
+rootProject.name = 'KotlinMVVMSamples'
