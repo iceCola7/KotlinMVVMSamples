@@ -12,6 +12,7 @@ object AppConfig {
     const val TAG = "KotlinMVVM"
 
     var debug = false
+        private set
 
     private var application: Application? = null
 

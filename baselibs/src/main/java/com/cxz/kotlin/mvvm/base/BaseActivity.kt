@@ -8,6 +8,7 @@ import android.view.WindowManager
 import androidx.annotation.ColorInt
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
+import com.cxz.kotlin.mvvm.ext.showToast
 import com.cxz.kotlin.mvvm.utils.KeyBoardUtil
 import com.cxz.kotlin.mvvm.utils.StatusBarUtil
 import com.tbruyelle.rxpermissions2.RxPermissions
@@ -18,7 +19,7 @@ import org.greenrobot.eventbus.EventBus
  * @date 2018/11/19
  * @desc BaseActivity
  */
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity : AppCompatActivity(), IView {
 
     /**
      * 布局文件id
@@ -76,6 +77,24 @@ abstract class BaseActivity : AppCompatActivity() {
         if (useEventBus()) EventBus.getDefault().register(this)
         initView()
         initData()
+    }
+
+    override fun showMsg(msg: String) {
+        showToast(msg)
+    }
+
+    override fun showDefaultMsg(msg: String) {
+        showToast(msg)
+    }
+
+    override fun showError(errorMsg: String) {
+        showToast(errorMsg)
+    }
+
+    override fun showLoading() {
+    }
+
+    override fun hideLoading() {
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
