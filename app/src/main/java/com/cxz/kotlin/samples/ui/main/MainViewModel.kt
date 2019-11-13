@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.cxz.kotlin.mvvm.base.BaseViewModel
 import com.cxz.kotlin.samples.ext.executeResponse
 import com.cxz.kotlin.samples.model.bean.Banner
+import com.cxz.kotlin.samples.model.bean.BaseResponse
 import com.cxz.kotlin.samples.model.repository.MainRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -16,12 +17,34 @@ import kotlinx.coroutines.withContext
 
 class MainViewModel : BaseViewModel() {
 
+    val mLoginData: MutableLiveData<BaseResponse<Any>> = MutableLiveData()
+
+    val mLogoutData: MutableLiveData<BaseResponse<Any>> = MutableLiveData()
+
     val mBannerList: MutableLiveData<List<Banner>> = MutableLiveData()
 
     val errorMsg: MutableLiveData<String> = MutableLiveData()
 
     private val repository by lazy {
         MainRepository()
+    }
+
+    fun login(username: String, password: String) {
+        launch {
+            val response = withContext(Dispatchers.IO) { repository.login(username, password) }
+            executeResponse(response,
+                { mLoginData.value = response },
+                { errorMsg.value = response.errorMsg })
+        }
+    }
+
+    fun logout() {
+        launch {
+            val response = withContext(Dispatchers.IO) { repository.logout() }
+            executeResponse(response,
+                { mLogoutData.value = response },
+                { errorMsg.value = response.errorMsg })
+        }
     }
 
     fun getBannerList() {
