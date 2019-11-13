@@ -13,6 +13,14 @@ import com.cxz.kotlin.samples.model.bean.BaseResponse
 
 class MainRepository : BaseRepository() {
 
+    suspend fun login(username: String, password: String): BaseResponse<Any> {
+        return apiCall { MainRetrofit.service.login(username, password) }
+    }
+
+    suspend fun logout(): BaseResponse<Any> {
+        return apiCall { MainRetrofit.service.logout() }
+    }
+
     suspend fun getBanner(): BaseResponse<List<Banner>> {
         return apiCall { MainRetrofit.service.getBanner() }
     }
