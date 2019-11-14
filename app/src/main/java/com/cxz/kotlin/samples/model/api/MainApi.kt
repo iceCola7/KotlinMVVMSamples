@@ -2,10 +2,9 @@ package com.cxz.kotlin.samples.model.api
 
 import com.cxz.kotlin.samples.model.bean.Banner
 import com.cxz.kotlin.samples.model.bean.BaseResponse
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.POST
+import com.cxz.kotlin.samples.model.bean.CollectionArticle
+import com.cxz.kotlin.samples.model.bean.CollectionResponseBody
+import retrofit2.http.*
 
 /**
  * @author chenxz
@@ -29,6 +28,7 @@ interface MainApi {
     @GET("user/logout/json")
     suspend fun logout(): BaseResponse<Any>
 
-
+    @GET("lg/collect/list/{page}/json")
+    suspend fun getCollectList(@Path("page") page: Int): BaseResponse<CollectionResponseBody<CollectionArticle>>
 
 }

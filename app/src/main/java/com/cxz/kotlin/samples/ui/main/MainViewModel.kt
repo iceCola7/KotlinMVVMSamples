@@ -5,6 +5,8 @@ import com.cxz.kotlin.mvvm.base.BaseViewModel
 import com.cxz.kotlin.samples.ext.executeResponse
 import com.cxz.kotlin.samples.model.bean.Banner
 import com.cxz.kotlin.samples.model.bean.BaseResponse
+import com.cxz.kotlin.samples.model.bean.CollectionArticle
+import com.cxz.kotlin.samples.model.bean.CollectionResponseBody
 import com.cxz.kotlin.samples.model.repository.MainRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -22,6 +24,8 @@ class MainViewModel : BaseViewModel() {
     val mLogoutData: MutableLiveData<BaseResponse<Any>> = MutableLiveData()
 
     val mBannerList: MutableLiveData<List<Banner>> = MutableLiveData()
+
+    val mCollectResponseBody: MutableLiveData<CollectionResponseBody<CollectionArticle>> = MutableLiveData()
 
     val errorMsg: MutableLiveData<String> = MutableLiveData()
 
@@ -56,5 +60,15 @@ class MainViewModel : BaseViewModel() {
                 { errorMsg.value = response.errorMsg })
         }
     }
+
+    fun getCollectList(page: Int) {
+        launch {
+            val response = withContext(Dispatchers.IO) { repository.getCollectList(page) }
+            executeResponse(response,
+                { mCollectResponseBody.value = response.data },
+                { errorMsg.value = response.errorMsg })
+        }
+    }
+
 
 }
