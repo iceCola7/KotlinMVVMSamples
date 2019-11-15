@@ -7,6 +7,7 @@ import com.cxz.kotlin.mvvm.base.BaseVMActivity
 import com.cxz.kotlin.samples.R
 import com.cxz.kotlin.samples.ext.loge
 import com.cxz.kotlin.samples.utils.DialogUtil
+import com.cxz.kotlin.samples.utils.PermissionHelper
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.base_toolbar.*
 
@@ -62,6 +63,11 @@ class MainActivity : BaseVMActivity<MainViewModel>() {
         btn_collect.setOnClickListener {
             showLoading()
             mViewModel.getCollectList(0)
+        }
+        btn_permission.setOnClickListener {
+            PermissionHelper.requestCameraPermission(this) {
+                showDefaultMsg("相机权限申请成功")
+            }
         }
     }
 
