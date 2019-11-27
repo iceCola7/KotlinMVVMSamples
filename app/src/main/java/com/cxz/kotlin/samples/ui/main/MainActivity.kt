@@ -4,6 +4,7 @@ import android.text.TextUtils
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.cxz.kotlin.mvvm.base.BaseVMActivity
+import com.cxz.kotlin.mvvm.ext.setSingleClickListener
 import com.cxz.kotlin.samples.R
 import com.cxz.kotlin.samples.ext.loge
 import com.cxz.kotlin.samples.utils.DialogUtil
@@ -38,33 +39,33 @@ class MainActivity : BaseVMActivity<MainViewModel>() {
     }
 
     override fun initData() {
-        btn_login.setOnClickListener {
+        btn_login.setSingleClickListener {
             val username = et_username.text.toString()
             val password = et_password.text.toString()
             if (TextUtils.isEmpty(username)) {
                 showDefaultMsg("账号不能为空")
-                return@setOnClickListener
+                return@setSingleClickListener
             }
             if (TextUtils.isEmpty(password)) {
                 showDefaultMsg("密码不能为空")
-                return@setOnClickListener
+                return@setSingleClickListener
             }
             showLoading()
             mViewModel.login(username, password)
         }
-        btn_logout.setOnClickListener {
+        btn_logout.setSingleClickListener {
             showLoading()
             mViewModel.logout()
         }
-        btn_get_banner.setOnClickListener {
+        btn_get_banner.setSingleClickListener {
             showLoading()
             mViewModel.getBannerList()
         }
-        btn_collect.setOnClickListener {
+        btn_collect.setSingleClickListener {
             showLoading()
             mViewModel.getCollectList(0)
         }
-        btn_permission.setOnClickListener {
+        btn_permission.setSingleClickListener {
             PermissionHelper.requestCameraPermission(this) {
                 showDefaultMsg("相机权限申请成功")
             }

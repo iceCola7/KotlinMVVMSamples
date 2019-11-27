@@ -2,6 +2,8 @@ package com.cxz.kotlin.mvvm.ext
 
 import android.content.Context
 import android.content.res.Resources
+import android.view.View
+import android.widget.Checkable
 import androidx.fragment.app.Fragment
 import com.cxz.kotlin.mvvm.config.AppConfig
 import com.cxz.kotlin.mvvm.utils.NLog
@@ -28,4 +30,20 @@ fun Fragment.showToast(content: String) {
 
 fun Context.showToast(content: String) {
     CustomToast(this, content).show()
+}
+
+// 扩展点击事件属性(重复点击时长)
+var <T : View> T.lastClickTime: Long
+    set(value) = setTag(1766613352, value)
+    get() = getTag(1766613352) as? Long ?: 0
+
+// 重复点击事件绑定
+inline fun <T : View> T.setSingleClickListener(time: Long = 1000, crossinline block: (T) -> Unit) {
+    setOnClickListener {
+        val currentTimeMillis = System.currentTimeMillis()
+        if (currentTimeMillis - lastClickTime > time || this is Checkable) {
+            lastClickTime = currentTimeMillis
+            block(this)
+        }
+    }
 }
