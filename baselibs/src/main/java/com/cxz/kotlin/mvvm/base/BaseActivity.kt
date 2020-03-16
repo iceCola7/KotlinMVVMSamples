@@ -1,6 +1,5 @@
 package com.cxz.kotlin.mvvm.base
 
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.MotionEvent
@@ -9,6 +8,7 @@ import androidx.annotation.ColorInt
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import com.cxz.kotlin.mvvm.ext.showToast
+import com.cxz.kotlin.mvvm.utils.ActivityUtil
 import com.cxz.kotlin.mvvm.utils.KeyBoardUtil
 import com.cxz.kotlin.mvvm.utils.StatusBarUtil
 import com.tbruyelle.rxpermissions2.RxPermissions
@@ -72,7 +72,8 @@ abstract class BaseActivity : AppCompatActivity(), IView {
     override fun onCreate(savedInstanceState: Bundle?) {
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
         super.onCreate(savedInstanceState)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        // requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT // 强制竖屏
+        ActivityUtil.getInstance().addActivity(this)
         setContentView(attachLayoutRes())
         if (useEventBus()) EventBus.getDefault().register(this)
         initView()
@@ -120,5 +121,6 @@ abstract class BaseActivity : AppCompatActivity(), IView {
     override fun onDestroy() {
         super.onDestroy()
         if (useEventBus()) EventBus.getDefault().unregister(this)
+        ActivityUtil.getInstance().removeActivity(this)
     }
 }
