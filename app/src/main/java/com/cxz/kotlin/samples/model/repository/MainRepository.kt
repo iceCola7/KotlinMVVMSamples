@@ -12,7 +12,6 @@ import com.cxz.kotlin.samples.model.bean.CollectionResponseBody
  * @date 2019/7/8
  * @desc
  */
-
 class MainRepository : BaseRepository() {
 
     suspend fun login(username: String, password: String): BaseResponse<Any> {

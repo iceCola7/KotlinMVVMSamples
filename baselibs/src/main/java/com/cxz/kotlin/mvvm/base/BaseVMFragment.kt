@@ -37,5 +37,4 @@ abstract class BaseVMFragment<VM : BaseViewModel> : BaseFragment() {
         lifecycle.removeObserver(mViewModel)
         super.onDestroy()
     }
-
 }

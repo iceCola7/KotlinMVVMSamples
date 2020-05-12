@@ -33,5 +33,4 @@ object AppConfig {
     fun openDebug() {
         debug = true
     }
-
 }

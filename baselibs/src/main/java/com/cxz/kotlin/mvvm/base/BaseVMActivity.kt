@@ -36,5 +36,4 @@ abstract class BaseVMActivity<VM : BaseViewModel> : BaseActivity() {
         lifecycle.removeObserver(mViewModel)
         super.onDestroy()
     }
-
 }

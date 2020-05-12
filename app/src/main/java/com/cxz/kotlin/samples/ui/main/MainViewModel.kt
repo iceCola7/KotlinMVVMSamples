@@ -16,7 +16,6 @@ import kotlinx.coroutines.withContext
  * @date 2019/11/3
  * @desc
  */
-
 class MainViewModel : BaseViewModel() {
 
     val mLoginData: MutableLiveData<BaseResponse<Any>> = MutableLiveData()

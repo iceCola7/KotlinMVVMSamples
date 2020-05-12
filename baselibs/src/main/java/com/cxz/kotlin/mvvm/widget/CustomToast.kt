@@ -31,5 +31,4 @@ class CustomToast {
     fun show() {
         toast.show()
     }
-
 }

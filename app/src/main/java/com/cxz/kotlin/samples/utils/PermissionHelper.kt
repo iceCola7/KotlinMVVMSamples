@@ -12,7 +12,6 @@ import androidx.fragment.app.FragmentActivity
 import com.cxz.kotlin.samples.widgets.PermissionDialog
 import com.tbruyelle.rxpermissions2.RxPermissions
 
-
 /**
  * @author admin
  * @date 2019/10/24
@@ -142,5 +141,4 @@ object PermissionHelper {
         }
         return -1
     }
-
 }

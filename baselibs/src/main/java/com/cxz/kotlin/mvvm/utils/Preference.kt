@@ -90,11 +90,9 @@ class Preference<T>(val name: String, private val default: T) {
 
     /**
      * 序列化对象
-
+     *
      * @param person
-     * *
      * @return
-     * *
      * @throws IOException
      */
     @Throws(IOException::class)
@@ -113,13 +111,10 @@ class Preference<T>(val name: String, private val default: T) {
 
     /**
      * 反序列化对象
-
+     *
      * @param str
-     * *
      * @return
-     * *
      * @throws IOException
-     * *
      * @throws ClassNotFoundException
      */
     @Suppress("UNCHECKED_CAST")

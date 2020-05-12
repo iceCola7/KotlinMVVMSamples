@@ -137,6 +137,4 @@ class PermissionDialog : DialogFragment() {
             return this.mConfirmDialog
         }
     }
-
-
 }

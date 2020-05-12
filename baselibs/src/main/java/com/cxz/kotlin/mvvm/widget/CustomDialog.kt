@@ -168,6 +168,4 @@ class CustomDialog : DialogFragment() {
             return this.mConfirmDialog
         }
     }
-
-
 }
