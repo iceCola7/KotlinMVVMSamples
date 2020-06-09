@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProviders
 /**
  * @author chenxz
  * @date 2019/11/1
- * @desc
+ * @desc BaseVMFragment
  */
 abstract class BaseVMFragment<VM : BaseViewModel> : BaseFragment() {
 
