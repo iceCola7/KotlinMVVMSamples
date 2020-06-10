@@ -51,7 +51,6 @@ open class BaseViewModel : ViewModel(), LifecycleObserver {
         }
     }
 
-
     private suspend fun tryCatch(
         tryBlock: suspend CoroutineScope.() -> Unit,
         catchBlock: suspend CoroutineScope.(Throwable) -> Unit,
