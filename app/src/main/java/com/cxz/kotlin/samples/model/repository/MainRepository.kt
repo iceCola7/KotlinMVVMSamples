@@ -14,20 +14,21 @@ import com.cxz.kotlin.samples.model.bean.CollectionResponseBody
  */
 class MainRepository : BaseRepository() {
 
+    private val mainService = MainRetrofit.service
+
     suspend fun login(username: String, password: String): BaseResponse<Any> {
-        return apiCall { MainRetrofit.service.login(username, password) }
+        return apiCall { mainService.login(username, password) }
     }
 
     suspend fun logout(): BaseResponse<Any> {
-        return apiCall { MainRetrofit.service.logout() }
+        return apiCall { mainService.logout() }
     }
 
     suspend fun getBanner(): BaseResponse<List<Banner>> {
-        return apiCall { MainRetrofit.service.getBanner() }
+        return apiCall { mainService.getBanner() }
     }
 
     suspend fun getCollectList(page: Int): BaseResponse<CollectionResponseBody<CollectionArticle>> {
-        return apiCall { MainRetrofit.service.getCollectList(page) }
+        return apiCall { mainService.getCollectList(page) }
     }
-
 }

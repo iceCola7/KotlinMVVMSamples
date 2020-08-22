@@ -24,7 +24,8 @@ class MainViewModel : BaseViewModel() {
 
     val mBannerList: MutableLiveData<List<Banner>> = MutableLiveData()
 
-    val mCollectResponseBody: MutableLiveData<CollectionResponseBody<CollectionArticle>> = MutableLiveData()
+    val mCollectResponseBody: MutableLiveData<CollectionResponseBody<CollectionArticle>> =
+        MutableLiveData()
 
     val errorMsg: MutableLiveData<String> = MutableLiveData()
 
@@ -35,18 +36,22 @@ class MainViewModel : BaseViewModel() {
     fun login(username: String, password: String) {
         launch {
             val response = withContext(Dispatchers.IO) { repository.login(username, password) }
-            executeResponse(response,
+            executeResponse(
+                response,
                 { mLoginData.value = response },
-                { errorMsg.value = response.errorMsg })
+                { errorMsg.value = response.errorMsg }
+            )
         }
     }
 
     fun logout() {
         launch {
             val response = withContext(Dispatchers.IO) { repository.logout() }
-            executeResponse(response,
+            executeResponse(
+                response,
                 { mLogoutData.value = response },
-                { errorMsg.value = response.errorMsg })
+                { errorMsg.value = response.errorMsg }
+            )
         }
     }
 
@@ -56,18 +61,19 @@ class MainViewModel : BaseViewModel() {
             executeResponse(
                 response,
                 { mBannerList.value = response.data },
-                { errorMsg.value = response.errorMsg })
+                { errorMsg.value = response.errorMsg }
+            )
         }
     }
 
     fun getCollectList(page: Int) {
         launch {
             val response = withContext(Dispatchers.IO) { repository.getCollectList(page) }
-            executeResponse(response,
+            executeResponse(
+                response,
                 { mCollectResponseBody.value = response.data },
-                { errorMsg.value = response.errorMsg })
+                { errorMsg.value = response.errorMsg }
+            )
         }
     }
-
-
 }
