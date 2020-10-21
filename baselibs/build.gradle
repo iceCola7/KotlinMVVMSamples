@@ -32,12 +32,14 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     api 'androidx.appcompat:appcompat:1.2.0'
-    api 'androidx.core:core-ktx:1.3.1'
-
-    api "android.arch.lifecycle:extensions:1.1.1"
-    api 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.0'
-    api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.0'
+    api 'androidx.core:core-ktx:1.3.2'
+    api 'com.google.android.material:material:1.2.1'
+    api 'androidx.constraintlayout:constraintlayout:2.0.2'
     api 'androidx.coordinatorlayout:coordinatorlayout:1.1.0'
+
+    api 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7'
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.0'
 
     // multidex
     api 'androidx.multidex:multidex:2.0.1'
@@ -54,5 +56,7 @@ dependencies {
     api 'com.squareup.okhttp3:logging-interceptor:4.7.2'
     // okHttp
     api 'com.squareup.okhttp3:okhttp:4.7.2'
+    // glide
+    api 'com.github.bumptech.glide:glide:4.11.0'
 
 }
