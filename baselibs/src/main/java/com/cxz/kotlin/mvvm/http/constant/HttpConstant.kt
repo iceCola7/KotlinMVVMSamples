@@ -16,3 +16,7 @@ object HttpConstant {
     const val COOKIE_NAME = "Cookie"
 
 }
+
+object HttpErrorCode {
+    const val SUCCESS = 0
+}

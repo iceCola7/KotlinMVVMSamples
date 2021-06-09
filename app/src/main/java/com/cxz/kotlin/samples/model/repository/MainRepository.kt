@@ -1,6 +1,6 @@
 package com.cxz.kotlin.samples.model.repository
 
-import com.cxz.kotlin.samples.model.api.BaseRepository
+import com.cxz.kotlin.mvvm.base.BaseRepository
 import com.cxz.kotlin.samples.model.api.MainRetrofit
 import com.cxz.kotlin.samples.model.bean.Banner
 import com.cxz.kotlin.samples.model.bean.CollectionArticle

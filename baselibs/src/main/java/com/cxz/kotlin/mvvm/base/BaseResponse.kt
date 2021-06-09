@@ -1,4 +1,4 @@
-package com.cxz.kotlin.samples.model.bean
+package com.cxz.kotlin.mvvm.base
 
 /**
  * @author admin

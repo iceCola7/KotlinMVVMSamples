@@ -1,7 +1,7 @@
 package com.cxz.kotlin.samples.model.api
 
+import com.cxz.kotlin.mvvm.base.BaseResponse
 import com.cxz.kotlin.samples.model.bean.Banner
-import com.cxz.kotlin.samples.model.bean.BaseResponse
 import com.cxz.kotlin.samples.model.bean.CollectionArticle
 import com.cxz.kotlin.samples.model.bean.CollectionResponseBody
 import retrofit2.http.*

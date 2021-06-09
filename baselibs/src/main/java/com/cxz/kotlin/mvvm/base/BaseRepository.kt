@@ -1,8 +1,7 @@
-package com.cxz.kotlin.samples.model.api
+package com.cxz.kotlin.mvvm.base
 
+import com.cxz.kotlin.mvvm.http.constant.HttpErrorCode
 import com.cxz.kotlin.mvvm.http.exception.HttpException
-import com.cxz.kotlin.samples.constants.ResponseCode
-import com.cxz.kotlin.samples.model.bean.BaseResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -21,8 +20,8 @@ open class BaseRepository {
     }
 
     fun <T> executeResponse(response: BaseResponse<T>): T? {
-        return when (response.errorCode) {
-            ResponseCode.SUCCESS -> {
+        when (response.errorCode) {
+            HttpErrorCode.SUCCESS -> {
                 return response.data
             }
             else -> {
