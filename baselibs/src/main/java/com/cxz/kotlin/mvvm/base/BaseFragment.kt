@@ -7,8 +7,6 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import com.cxz.kotlin.mvvm.ext.showToast
-import com.tbruyelle.rxpermissions2.RxPermissions
-import org.greenrobot.eventbus.EventBus
 
 /**
  * @author chenxz
@@ -21,6 +19,7 @@ abstract class BaseFragment : Fragment(), IView {
      * 视图是否加载完毕
      */
     private var isViewPrepare = false
+
     /**
      * 数据是否加载过了
      */
@@ -47,18 +46,6 @@ abstract class BaseFragment : Fragment(), IView {
      */
     abstract fun lazyLoad()
 
-    /**
-     * 是否使用 EventBus
-     */
-    open fun useEventBus(): Boolean = false
-
-    /**
-     * 获取权限处理类
-     */
-    protected val rxPermissions: RxPermissions by lazy {
-        RxPermissions(this)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -76,7 +63,6 @@ abstract class BaseFragment : Fragment(), IView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (useEventBus()) EventBus.getDefault().register(this)
         isViewPrepare = true
         initView(view)
         initData()
@@ -110,6 +96,5 @@ abstract class BaseFragment : Fragment(), IView {
 
     override fun onDestroy() {
         super.onDestroy()
-        if (useEventBus()) EventBus.getDefault().unregister(this)
     }
 }

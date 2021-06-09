@@ -10,8 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.cxz.kotlin.mvvm.ext.showToast
 import com.cxz.kotlin.mvvm.utils.KeyBoardUtil
 import com.cxz.kotlin.mvvm.utils.StatusBarUtil
-import com.tbruyelle.rxpermissions2.RxPermissions
-import org.greenrobot.eventbus.EventBus
 
 /**
  * @author chenxz
@@ -35,18 +33,6 @@ abstract class BaseActivity : AppCompatActivity(), IView {
      * 初始化 View
      */
     abstract fun initView()
-
-    /**
-     * 是否使用 EventBus
-     */
-    open fun useEventBus(): Boolean = false
-
-    /**
-     * 获取权限处理类
-     */
-    protected val rxPermissions: RxPermissions by lazy {
-        RxPermissions(this)
-    }
 
     /**
      * 设置状态栏的背景颜色
@@ -73,7 +59,6 @@ abstract class BaseActivity : AppCompatActivity(), IView {
         super.onCreate(savedInstanceState)
         // requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT // 强制竖屏
         setContentView(attachLayoutRes())
-        if (useEventBus()) EventBus.getDefault().register(this)
         initView()
         initData()
     }
@@ -118,6 +103,5 @@ abstract class BaseActivity : AppCompatActivity(), IView {
 
     override fun onDestroy() {
         super.onDestroy()
-        if (useEventBus()) EventBus.getDefault().unregister(this)
     }
 }
