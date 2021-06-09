@@ -22,8 +22,7 @@ interface MainApi {
 
     @POST("user/login")
     @FormUrlEncoded
-    suspend fun login(@Field("username") username: String, @Field("password") password: String)
-            : BaseResponse<Any>
+    suspend fun login(@Field("username") username: String, @Field("password") password: String): BaseResponse<Any>
 
     @GET("user/logout/json")
     suspend fun logout(): BaseResponse<Any>

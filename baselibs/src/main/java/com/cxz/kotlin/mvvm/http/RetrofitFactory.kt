@@ -1,5 +1,6 @@
 package com.cxz.kotlin.mvvm.http
 
+import android.util.Log
 import com.cxz.kotlin.mvvm.config.AppConfig
 import com.cxz.kotlin.mvvm.http.constant.HttpConstant
 import com.cxz.kotlin.mvvm.http.interceptor.CacheInterceptor
@@ -60,7 +61,19 @@ abstract class RetrofitFactory<T> {
      */
     open fun attachOkHttpClient(): OkHttpClient {
         val builder = OkHttpClient().newBuilder()
-        val httpLoggingInterceptor = HttpLoggingInterceptor()
+        val httpLoggingInterceptor = HttpLoggingInterceptor {
+            var log = it
+            // 因为String的length是字符数量不是字节数量所以为了防止中文字符过多，
+            // 把4*1024的MAX字节打印长度改为2001字符数
+            val maxLength = 2001 - "http".length
+            // 大于4000时
+            while (log.length > maxLength) {
+                Log.d("http", log.substring(0, maxLength))
+                log = log.substring(maxLength)
+            }
+            // 剩余部分
+            Log.d("http", log)
+        }
         if (AppConfig.debug) {
             httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         } else {

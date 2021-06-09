@@ -3,6 +3,10 @@ package com.cxz.kotlin.mvvm.base
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.cxz.kotlin.mvvm.ext.showToast
+import com.cxz.kotlin.mvvm.http.exception.HttpException
+import com.orhanobut.logger.Logger
 import kotlinx.coroutines.*
 
 /**
@@ -13,6 +17,27 @@ import kotlinx.coroutines.*
 open class BaseViewModel : ViewModel(), LifecycleObserver {
 
     private val mException: MutableLiveData<Exception> = MutableLiveData()
+
+    val showLoading = MutableLiveData<Boolean>()
+
+    fun scopeLaunch(
+        block: suspend CoroutineScope.() -> Unit,
+        onException: ((Throwable) -> Unit)? = null
+    ) {
+        val handler = CoroutineExceptionHandler { _, throwable ->
+            Logger.e(throwable, throwable.message ?: "scopeLaunch")
+            showLoading.postValue(false)
+            when (throwable) {
+                is HttpException -> {
+                    showToast(throwable.errorMsg)
+                }
+            }
+            onException?.invoke(throwable)
+        }
+        viewModelScope.launch(handler) {
+            block()
+        }
+    }
 
     private fun launchOnUI(block: suspend CoroutineScope.() -> Unit) {
         MainScope().launch { block() }

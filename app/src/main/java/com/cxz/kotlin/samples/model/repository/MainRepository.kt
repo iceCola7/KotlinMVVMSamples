@@ -3,7 +3,6 @@ package com.cxz.kotlin.samples.model.repository
 import com.cxz.kotlin.samples.model.api.BaseRepository
 import com.cxz.kotlin.samples.model.api.MainRetrofit
 import com.cxz.kotlin.samples.model.bean.Banner
-import com.cxz.kotlin.samples.model.bean.BaseResponse
 import com.cxz.kotlin.samples.model.bean.CollectionArticle
 import com.cxz.kotlin.samples.model.bean.CollectionResponseBody
 
@@ -14,21 +13,23 @@ import com.cxz.kotlin.samples.model.bean.CollectionResponseBody
  */
 class MainRepository : BaseRepository() {
 
-    private val mainService = MainRetrofit.service
+    private val mainService by lazy {
+        MainRetrofit.service
+    }
 
-    suspend fun login(username: String, password: String): BaseResponse<Any> {
+    suspend fun login(username: String, password: String): Any? {
         return apiCall { mainService.login(username, password) }
     }
 
-    suspend fun logout(): BaseResponse<Any> {
+    suspend fun logout(): Any? {
         return apiCall { mainService.logout() }
     }
 
-    suspend fun getBanner(): BaseResponse<List<Banner>> {
+    suspend fun getBanner(): List<Banner>? {
         return apiCall { mainService.getBanner() }
     }
 
-    suspend fun getCollectList(page: Int): BaseResponse<CollectionResponseBody<CollectionArticle>> {
+    suspend fun getCollectList(page: Int): CollectionResponseBody<CollectionArticle>? {
         return apiCall { mainService.getCollectList(page) }
     }
 }

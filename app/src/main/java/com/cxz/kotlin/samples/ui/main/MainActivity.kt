@@ -1,12 +1,10 @@
 package com.cxz.kotlin.samples.ui.main
 
 import android.text.TextUtils
-import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.cxz.kotlin.mvvm.base.BaseVMActivity
 import com.cxz.kotlin.mvvm.ext.setSingleClickListener
 import com.cxz.kotlin.samples.R
-import com.cxz.kotlin.samples.ext.loge
 import com.cxz.kotlin.samples.utils.DialogUtil
 import com.cxz.kotlin.samples.utils.PermissionHelper
 import kotlinx.android.synthetic.main.activity_main.*
@@ -50,19 +48,15 @@ class MainActivity : BaseVMActivity<MainViewModel>() {
                 showDefaultMsg("密码不能为空")
                 return@setSingleClickListener
             }
-            showLoading()
             mViewModel.login(username, password)
         }
         btn_logout.setSingleClickListener {
-            showLoading()
             mViewModel.logout()
         }
         btn_get_banner.setSingleClickListener {
-            showLoading()
             mViewModel.getBannerList()
         }
         btn_collect.setSingleClickListener {
-            showLoading()
             mViewModel.getCollectList(0)
         }
         btn_permission.setSingleClickListener {
@@ -73,33 +67,23 @@ class MainActivity : BaseVMActivity<MainViewModel>() {
     }
 
     override fun startObserver() {
-        mViewModel.apply {
-            mLoginData.observe(this@MainActivity, Observer {
-                hideLoading()
-                showDefaultMsg("登录成功")
-            })
-            mLogoutData.observe(this@MainActivity, Observer {
-                hideLoading()
-                showDefaultMsg("已退出登录")
-            })
-            mBannerList.observe(this@MainActivity, Observer { bannerList ->
-                hideLoading()
-                if (bannerList.isNotEmpty()) {
-                    tv_result.text = bannerList[0].title
-                    Glide.with(this@MainActivity).load(bannerList[0].imagePath).into(imageView)
-                }
-            })
-            mCollectResponseBody.observe(this@MainActivity, Observer { body ->
-                hideLoading()
-                if (body.datas.isNotEmpty()) {
-                    tv_result.text = body.datas[0].title
-                }
-            })
-            errorMsg.observe(this@MainActivity, Observer {
-                hideLoading()
-                showDefaultMsg(it)
-                loge("errorMsg---->>$it")
-            })
+        super.startObserver()
+        mViewModel.mLoginData.observe(this) {
+            showDefaultMsg("登录成功")
+        }
+        mViewModel.mLogoutData.observe(this) {
+            showDefaultMsg("已退出登录")
+        }
+        mViewModel.mBannerList.observe(this) { bannerList ->
+            if (bannerList.isNotEmpty()) {
+                tv_result.text = bannerList[0].title
+                Glide.with(this@MainActivity).load(bannerList[0].imagePath).into(imageView)
+            }
+        }
+        mViewModel.mCollectResponseBody.observe(this) { body ->
+            if (body.datas.isNotEmpty()) {
+                tv_result.text = body.datas[0].title
+            }
         }
     }
 

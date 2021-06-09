@@ -2,7 +2,7 @@ package com.cxz.kotlin.mvvm.base
 
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 
 /**
  * @author chenxz
@@ -28,8 +28,23 @@ abstract class BaseVMFragment<VM : BaseViewModel> : BaseFragment() {
             throw RuntimeException("ViewModel must not be null.")
         }
         attachVMClass()?.let {
-            mViewModel = ViewModelProviders.of(this).get(it)
+            mViewModel = ViewModelProvider(this).get(it)
             lifecycle.addObserver(mViewModel)
+        }
+    }
+
+    /**
+     * 观察 Loading 的监听
+     */
+    open fun subscribeLoadingDialog(vararg baseAndroidViewModel: BaseViewModel) {
+        baseAndroidViewModel.forEach {
+            it.showLoading.observe(this) { isShow ->
+                if (isShow) {
+                    showLoading()
+                } else {
+                    hideLoading()
+                }
+            }
         }
     }
 

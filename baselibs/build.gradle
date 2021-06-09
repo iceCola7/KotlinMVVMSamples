@@ -91,5 +91,7 @@ dependencies {
     api 'com.squareup.okhttp3:okhttp:4.9.0'
     // glide
     api 'com.github.bumptech.glide:glide:4.12.0'
+    // logger
+    api 'com.orhanobut:logger:2.2.0'
 
 }

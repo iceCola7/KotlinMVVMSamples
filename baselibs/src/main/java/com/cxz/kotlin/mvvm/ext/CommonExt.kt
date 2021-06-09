@@ -24,14 +24,6 @@ fun dp2px(dpValue: Float): Int {
     return (0.5f + dpValue * Resources.getSystem().displayMetrics.density).toInt()
 }
 
-fun Fragment.showToast(content: String) {
-    CustomToast(this.activity?.applicationContext, content).show()
-}
-
-fun Context.showToast(content: String) {
-    CustomToast(this, content).show()
-}
-
 // 扩展点击事件属性(重复点击时长)
 var <T : View> T.lastClickTime: Long
     set(value) = setTag(1766613352, value)
