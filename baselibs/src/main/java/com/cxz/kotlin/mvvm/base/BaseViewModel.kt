@@ -16,16 +16,14 @@ import kotlinx.coroutines.*
  */
 open class BaseViewModel : ViewModel(), LifecycleObserver {
 
-    private val mException: MutableLiveData<Exception> = MutableLiveData()
-
     val showLoading = MutableLiveData<Boolean>()
 
-    fun scopeLaunch(
+    fun launchOnUI(
         block: suspend CoroutineScope.() -> Unit,
         onException: ((Throwable) -> Unit)? = null
     ) {
         val handler = CoroutineExceptionHandler { _, throwable ->
-            Logger.e(throwable, throwable.message ?: "scopeLaunch")
+            Logger.e(throwable, throwable.message ?: "launchOnUI")
             showLoading.postValue(false)
             when (throwable) {
                 is HttpException -> {
@@ -34,67 +32,8 @@ open class BaseViewModel : ViewModel(), LifecycleObserver {
             }
             onException?.invoke(throwable)
         }
-        viewModelScope.launch(handler) {
+        viewModelScope.launch(Dispatchers.Main + handler) {
             block()
-        }
-    }
-
-    private fun launchOnUI(block: suspend CoroutineScope.() -> Unit) {
-        MainScope().launch { block() }
-        // viewModelScope.launch { block() }  /// ???
-    }
-
-    suspend fun <T> launchIO(block: suspend CoroutineScope.() -> T) {
-        withContext(Dispatchers.IO) {
-            block
-        }
-    }
-
-    fun launch(tryBlock: suspend CoroutineScope.() -> Unit) {
-        launchOnUI {
-            tryCatch(tryBlock, {}, {}, true)
-        }
-    }
-
-    fun launchOnUITryCatch(
-        tryBlock: suspend CoroutineScope.() -> Unit,
-        catchBlock: suspend CoroutineScope.(Throwable) -> Unit,
-        finallyBlock: suspend CoroutineScope.() -> Unit,
-        handleCancellationExceptionManually: Boolean
-    ) {
-        launchOnUI {
-            tryCatch(tryBlock, catchBlock, finallyBlock, handleCancellationExceptionManually)
-        }
-    }
-
-    fun launchOnUITryCatch(
-        tryBlock: suspend CoroutineScope.() -> Unit,
-        handleCancellationExceptionManually: Boolean = false
-    ) {
-        launchOnUI {
-            tryCatch(tryBlock, {}, {}, handleCancellationExceptionManually)
-        }
-    }
-
-    private suspend fun tryCatch(
-        tryBlock: suspend CoroutineScope.() -> Unit,
-        catchBlock: suspend CoroutineScope.(Throwable) -> Unit,
-        finallyBlock: suspend CoroutineScope.() -> Unit,
-        handleCancellationExceptionManually: Boolean = false
-    ) {
-        coroutineScope {
-            try {
-                tryBlock()
-            } catch (e: Exception) {
-                if (e !is CancellationException || handleCancellationExceptionManually) {
-                    mException.value = e
-                    catchBlock(e)
-                } else {
-                    throw e
-                }
-            } finally {
-                finallyBlock()
-            }
         }
     }
 }
