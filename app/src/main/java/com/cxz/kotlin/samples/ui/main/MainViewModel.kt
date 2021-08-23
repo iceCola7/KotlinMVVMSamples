@@ -29,7 +29,7 @@ class MainViewModel : BaseViewModel() {
     }
 
     fun login(username: String, password: String) {
-        scopeLaunch({
+        launchOnUI({
             showLoading.postValue(true)
             mLoginData.value = repository.login(username, password)
             showLoading.postValue(false)
@@ -37,7 +37,7 @@ class MainViewModel : BaseViewModel() {
     }
 
     fun logout() {
-        scopeLaunch({
+        launchOnUI({
             showLoading.postValue(true)
             mLogoutData.value = repository.logout()
             showLoading.postValue(false)
@@ -45,7 +45,7 @@ class MainViewModel : BaseViewModel() {
     }
 
     fun getBannerList() {
-        scopeLaunch({
+        launchOnUI({
             showLoading.postValue(true)
             mBannerList.value = repository.getBanner()
             showLoading.postValue(false)
@@ -53,7 +53,7 @@ class MainViewModel : BaseViewModel() {
     }
 
     fun getCollectList(page: Int) {
-        scopeLaunch({
+        launchOnUI({
             showLoading.postValue(true)
             mCollectResponseBody.value = repository.getCollectList(page)
             showLoading.postValue(false)

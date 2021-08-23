@@ -1,4 +1,4 @@
-package com.cxz.kotlin.baselibs.widget
+package com.cxz.kotlin.mvvm.widget
 
 import android.view.View
 
